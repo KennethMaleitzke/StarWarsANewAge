@@ -14,29 +14,54 @@ namespace StarWarsANewAge.BusinessLayer
         GameSessionViewModel _gameSessionViewModel;
         Player _player = new Player();
         List<string> _messages = new List<string>();
+        bool _newPlayer = true;
+        PlayerSetupView playerSetupView;
 
         public GameBusiness()
         {
+            SetupPlayer();
             InitializeDataSet();
             InstantiateAndShowView();
         }
 
         private void InitializeDataSet()
         {
-            _player = GameData.PlayerData();
             _messages = GameData.InitialMessages();
         }
 
         private void InstantiateAndShowView()
         {
             _gameSessionViewModel = new GameSessionViewModel(
-                _player, GameData.InitialMessages());
+            _player, 
+            GameData.InitialMessages(),
+            GameData.Map(),
+            GameData.InitialMapLocation()
+            );
 
             GameSessionView gameSessionView = new GameSessionView(_gameSessionViewModel);
 
             gameSessionView.DataContext = _gameSessionViewModel;
 
             gameSessionView.Show();
+
+            _playerSetupView.Close();
+        }
+
+        private void SetupPlayer()
+        {
+            if (_newPlayer)
+            {
+                _playerSetupView = new PlayerSetupView(_player);
+                _playerSetupView.ShowDialog();
+
+                _player.ExperiencePoints = 0;
+                _player.Health = 100;
+                _player.Lives = 5;
+            }
+            else
+            {
+                _player = GameData.PlayerData();
+            }
         }
     }
 }

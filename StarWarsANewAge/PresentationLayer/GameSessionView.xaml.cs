@@ -22,15 +22,10 @@ namespace StarWarsANewAge.PresentationLayer
     {
         GameSessionViewModel _gameSessionViewModel;
 
-        public GameSessionView(GameSessionView gameSessionViewModel)
-        {
-            _gameSessionViewModel = gameSessionViewModel;
-            InitializeComponent();
-        }
-
         public GameSessionView(GameSessionViewModel gameSessionViewModel)
         {
             _gameSessionViewModel = gameSessionViewModel;
+            InitializeComponent();
         }
     }
 }

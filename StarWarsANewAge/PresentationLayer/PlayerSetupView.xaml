@@ -1,0 +1,202 @@
+﻿<Window x:Class="StarWarsANewAge.PresentationLayer.PlayerSetupView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StarWarsANewAge.PresentationLayer"
+        mc:Ignorable="d"
+        Title="PlayerSetupView" Height="450" Width="800" Background="Black">
+    <Window.Resources>
+        <ControlTemplate x:Key="RoundTextboxCornterTemplate" TargetType="{x:Type TextBoxBase}">
+            <Border 
+                Background="{TemplateBinding Background}"   
+                x:Name="Bd" BorderBrush="Black"  
+                BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5">
+                <ScrollViewer x:Name="PART_ContentHost"/>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" TargetName="Bd"/>
+                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                </Trigger>
+                <Trigger Property="Width" Value="Auto">
+                    <Setter Property="MinWidth" Value="100"/>
+                </Trigger>
+                <Trigger Property="Height" Value="Auto">
+                    <Setter Property="MinHeight" Value="20"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <Style x:Key="PlayerPanelLabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="Yellow"/>
+            <Setter Property="FontFamily" Value="Lucida Console"/>
+        </Style>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Foreground" Value="Yellow"/>
+            <Setter Property="Background" Value="MidnightBlue"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="74*"/>
+            <ColumnDefinition Width="315*"/>
+            <ColumnDefinition Width="129*"/>
+        </Grid.ColumnDefinitions>
+        <Label
+            Content="Character Customization"
+            Style="{StaticResource PlayerPanelLabelStyle}"
+            Grid.Row="0"
+            Grid.Column="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            FontSize="16" Margin="175.667,36,72,22" Width="235"/>
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center" Margin="22.667,-1,25.667,5" Width="81">
+        </StackPanel>
+        <Grid
+            Grid.Row="1"
+            Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,0.333,-0.333">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Label
+                x:Name="Label_Length"
+                Style="{StaticResource PlayerPanelLabelStyle}"
+                Grid.Row="0"
+                Grid.Column="0"
+                Content="Name"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Padding="0,0,10,10"
+                FontSize="20"/>
+            <TextBox
+                x:Name="NameTextBox"
+                Grid.Row="0"
+                Grid.Column="1"
+                Width="100"
+                Height="25"
+                HorizontalAlignment="Left"
+                Template="{StaticResource RoundTextboxCornterTemplate}"
+                />
+            <Label
+                x:Name="Label_Width"
+                Style="{StaticResource PlayerPanelLabelStyle}"
+                Grid.Row="1"
+                Grid.Column="0"
+                Content="Race"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Padding="0,0,10,10"
+                FontSize="20"/>
+            <ComboBox
+                x:Name="RaceComboBox"
+                Grid.Row="1"
+                Grid.Column="1"
+                Width="100"
+                Height="25"
+                HorizontalAlignment="Left"
+                />
+            <Label
+                x:Name="Label_Budget"
+                Style="{StaticResource PlayerPanelLabelStyle}"
+                Grid.Row="2"
+                Grid.Column="0"
+                Content="Age"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Padding="0,0,10,10"
+                FontSize="20"/>
+            <TextBox
+                x:Name="AgeTextBox"
+                Grid.Row="2"
+                Grid.Column="1"
+                Width="100"
+                Height="25"
+                HorizontalAlignment="Left"
+                Template="{StaticResource RoundTextboxCornterTemplate}"/>
+            <Label
+                x:Name="Label_JobTitleComboBox"
+                Style="{StaticResource PlayerPanelLabelStyle}"
+                Grid.Row="3"
+                Grid.Column="0"
+                Content="Job Title"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Padding="0,0,10,10"
+                FontSize="20"/>
+            <ComboBox
+                x:Name="JobTitleComboBox"
+                 Grid.Row="3"
+                Grid.Column="1"
+                Width="100"
+                Height="25"
+                HorizontalAlignment="Left"/>
+            <Label
+                x:Name="Label_Cost"
+                Style="{StaticResource PlayerPanelLabelStyle}"
+                Grid.Row="4"
+                Grid.Column="0"
+                Content="Total"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Padding="0,0,10,10"
+                FontSize="20"/>
+
+            <TextBox
+                x:Name="TextBox_Cost"
+                Grid.Row="4"
+                Grid.Column="1"
+                Width="100"
+                Height="25"
+                HorizontalAlignment="Left"
+                IsReadOnly="True"
+                Template="{StaticResource RoundTextboxCornterTemplate}" TextChanged="Volume_TextChanged"
+                />
+        </Grid>
+        <StackPanel
+            Grid.Row="1"
+            Grid.Column="1"
+            Orientation="Vertical" Grid.ColumnSpan="2" Margin="315,0,-0.334,-0.333">
+            <Button
+                x:Name="Button_Help"
+                Style="{StaticResource ButtonStyle}"
+                Content="Help"
+                Width="75"
+                Height="30"
+                Margin="145,10,145.333,10"
+                FontSize="16" RenderTransformOrigin="0.601,5.27"
+                Click="Button_Help_Click"/>
+            <Button
+                x:Name="OkButton"
+                Style="{StaticResource ButtonStyle}"
+                Content="OK"
+                Width="75"
+                Height="30"
+                Margin="10"
+                FontSize="16" RenderTransformOrigin="0.601,5.27"
+                Click="OkButton_Click"/>
+            <TextBlock Foreground="Yellow"
+                       x:Name="ErrorMessageTextBlock">
+                This is a test.
+            </TextBlock>
+
+
+
+        </StackPanel>
+    </Grid>
+</Window>
