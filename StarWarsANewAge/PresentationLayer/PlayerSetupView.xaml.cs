@@ -22,8 +22,12 @@ namespace StarWarsANewAge.PresentationLayer
     /// </summary>
     public partial class PlayerSetupView : Window
     {
-        public PlayerSetupView()
+        Player _player;
+
+        public PlayerSetupView(Player player)
         {
+            _player = player;
+
             InitializeComponent();
 
             SetupWindow();
@@ -31,10 +35,10 @@ namespace StarWarsANewAge.PresentationLayer
 
         private void SetupWindow()
         {
-            List<string> races = Enum.GetNames(typeof(PlayerSetupView.RaceType)).ToList();
+            List<string> races = Enum.GetNames(typeof(Character.RaceType)).ToList();
             List<string> jobTitles = Enum.GetNames(typeof(Player.JobTitleName)).ToList();
-            JobTitleComboBox.ItemSource = jobTitles;
-            RaceComboBox.ItemSource = races;
+            JobTitleComboBox.ItemsSource = jobTitles;
+            RaceComboBox.ItemsSource = races;
 
             ErrorMessageTextBlock.Visibility = Visibility.Hidden;
         }
@@ -82,6 +86,11 @@ namespace StarWarsANewAge.PresentationLayer
                 ErrorMessageTextBlock.Visibility = Visibility.Visible;
                 ErrorMessageTextBlock.Text = errorMessage;
             }
+        }
+
+        private void Button_Help_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -146,27 +146,6 @@
                 Width="100"
                 Height="25"
                 HorizontalAlignment="Left"/>
-            <Label
-                x:Name="Label_Cost"
-                Style="{StaticResource PlayerPanelLabelStyle}"
-                Grid.Row="4"
-                Grid.Column="0"
-                Content="Total"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Padding="0,0,10,10"
-                FontSize="20"/>
-
-            <TextBox
-                x:Name="TextBox_Cost"
-                Grid.Row="4"
-                Grid.Column="1"
-                Width="100"
-                Height="25"
-                HorizontalAlignment="Left"
-                IsReadOnly="True"
-                Template="{StaticResource RoundTextboxCornterTemplate}" TextChanged="Volume_TextChanged"
-                />
         </Grid>
         <StackPanel
             Grid.Row="1"

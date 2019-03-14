@@ -14,8 +14,8 @@ namespace StarWarsANewAge.BusinessLayer
         GameSessionViewModel _gameSessionViewModel;
         Player _player = new Player();
         List<string> _messages = new List<string>();
-        bool _newPlayer = true;
-        PlayerSetupView playerSetupView;
+        bool _newPlayer = false;
+        PlayerSetupView _playerSetupView;
 
         public GameBusiness()
         {
@@ -33,9 +33,7 @@ namespace StarWarsANewAge.BusinessLayer
         {
             _gameSessionViewModel = new GameSessionViewModel(
             _player, 
-            GameData.InitialMessages(),
-            GameData.Map(),
-            GameData.InitialMapLocation()
+            GameData.InitialMessages()
             );
 
             GameSessionView gameSessionView = new GameSessionView(_gameSessionViewModel);
@@ -44,7 +42,7 @@ namespace StarWarsANewAge.BusinessLayer
 
             gameSessionView.Show();
 
-            _playerSetupView.Close();
+            //_playerSetupView.Close();
         }
 
         private void SetupPlayer()
