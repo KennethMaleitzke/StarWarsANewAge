@@ -133,10 +133,23 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Margin="0">
-                            <Label 
-                                Content="Location and Travel Interface" 
-                                HorizontalAlignment="Center"
-                                Style="{StaticResource MainPanelLabelStyle}"/>
+                            <TextBox
+                                Margin="5"
+                                Width="250"
+                                Text="{Binding CurrentLocation.Name}"
+                                Style="{StaticResource MainPanelTextBoxStyle}"/>
+                            <TextBox
+                                Margin="5"
+                                Width="auto"
+                                Height="100"
+                                TextWrapping="Wrap"
+                                Text="{Binding CurrentLocation.Description}"
+                                Style="{StaticResource MainPanelTextBoxStyle}"/>
+                            <ListBox
+	                            Width="300"
+	                            ItemsSource="{Binding AccessibleLocations}"
+	                            SelectedItem="{Binding CurrentLocationName}">
+                            </ListBox>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -202,10 +215,18 @@
                         <StackPanel
                             Grid.Column="2"
                             Orientation="Vertical">
-                            <Label 
-                                HorizontalAlignment="Center"
-                                Content="Player Stats" 
-                                Style="{StaticResource MainPanelLabelStyle}"/>
+                            <StackPanel
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                                <Label Content="Health" Style="{StaticResource MainPanelLabelStyle}"/>
+                                <TextBox Text="{Binding Player.Health}" Style="{StaticResource MainPanelTextBoxStyle}"/>
+                            </StackPanel>
+                            <StackPanel
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                                <Label Content="Experience" Style="{StaticResource MainPanelLabelStyle}"/>
+                                <TextBox Text="{Binding Player.ExperiencePoints}" Style="{StaticResource MainPanelTextBoxStyle}"/>
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
                 </Border>

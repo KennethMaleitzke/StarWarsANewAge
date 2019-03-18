@@ -10,7 +10,7 @@ namespace StarWarsANewAge.Models
     {
         #region ENUMS
 
-        public enum JobTitleName { Jedi, Sith }
+        public enum JobTitleName { Explorer, MissionLeader, Supervisor }
 
         #endregion
 
@@ -20,6 +20,13 @@ namespace StarWarsANewAge.Models
         private int _health;
         private int _experiencePoints;
         private JobTitleName _jobTitle;
+        private List<Location> _locationsVisited;
+        public List<Location> LocationsVisited
+        {
+            get { return _locationsVisited; }
+            set { _locationsVisited = value; }
+        }
+
 
         #endregion
 
@@ -46,13 +53,20 @@ namespace StarWarsANewAge.Models
         public int ExperiencePoints
         {
             get { return _experiencePoints; }
-            set { _experiencePoints = value; }
+            set
+            {
+                _experiencePoints = value;
+                OnPropertyChanged(nameof(ExperiencePoints));
+            }
         }
 
         #endregion
 
         #region CONSTRUCTORS
-
+        public Player()
+        {
+            LocationsVisited = new List<Location>();
+        }
 
 
         #endregion

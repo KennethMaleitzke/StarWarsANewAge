@@ -27,5 +27,10 @@ namespace StarWarsANewAge.PresentationLayer
             _gameSessionViewModel = gameSessionViewModel;
             InitializeComponent();
         }
+
+        private void InitializeWindowTheme()
+        {
+            this.Title = "Smelted Goldfish Productions";
+        }
     }
 }
