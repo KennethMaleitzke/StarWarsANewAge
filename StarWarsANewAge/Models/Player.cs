@@ -10,7 +10,7 @@ namespace StarWarsANewAge.Models
     {
         #region ENUMS
 
-        public enum JobTitleName { Explorer, MissionLeader, Supervisor }
+        public enum JobTitleName { Jedi, Sith }
 
         #endregion
 

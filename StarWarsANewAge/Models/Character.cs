@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarWarsANewAge.Models
 {
-    public class Character
+    public class Character : ObservableObject
     {
         public enum RaceType
         {
