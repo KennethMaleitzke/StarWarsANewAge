@@ -7,10 +7,10 @@ using System.Collections.ObjectModel;
 
 namespace StarWarsANewAge.Models
 {
-    class Map
+    public class Map
     {
         #region FIELD
-        private ObservableCollection<Location> _location;
+        private ObservableCollection<Location> _locations;
         private Location _currentLocation;
         private ObservableCollection<Location> _accessibleLocations;
 
@@ -20,14 +20,14 @@ namespace StarWarsANewAge.Models
         {
             get
             {
-                ObservableCollection<Location> accessibleLocations = new ObservableCollection<Location>();
+                _accessibleLocations = new ObservableCollection<Location>();
                 foreach (var location in _locations)
                 {
                     if (location.Accessible == true)
                     {
-                        accessibleLocations.Add(location);
+                        _accessibleLocations.Add(location);
                     }
-                    accessibleLocations.Add(location);
+                    //_accessibleLocations.Add(location);
                 }
                 return _accessibleLocations;
             }
@@ -43,8 +43,8 @@ namespace StarWarsANewAge.Models
 
         public ObservableCollection<Location> Location
         {
-            get { return _location; }
-            set { _location = value; }
+            get { return _locations; }
+            set { _locations = value; }
         }
         #endregion
         #region CONSTRUCTORS

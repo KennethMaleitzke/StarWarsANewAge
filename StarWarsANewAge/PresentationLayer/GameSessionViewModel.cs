@@ -140,15 +140,16 @@ namespace StarWarsANewAge.PresentationLayer
         private void OnPlayerMove()
         {
             //
-            // set new current location
+            //set new current location
             //
-            //foreach (Location location in AccessibleLocations)
-            //{
-            //    if (location.Name == _currentLocationName)
-            //    {
-            //        _currentLocation = location;
-            //    }
-            //}
+
+            foreach (Location location in AccessibleLocations)
+            {
+                if (location.Name == _currentLocationName)
+                {
+                    _currentLocation = location;
+                }
+            }
             _currentLocation = AccessibleLocations.FirstOrDefault(l => l.Name == _currentLocationName);
 
             if (!_player.LocationsVisited.Contains(_currentLocation))

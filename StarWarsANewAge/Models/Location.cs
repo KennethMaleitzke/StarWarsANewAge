@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StarWarsANewAge.Models
 {
-    class Location
+    public class Location
     {
         #region ENUMS
 

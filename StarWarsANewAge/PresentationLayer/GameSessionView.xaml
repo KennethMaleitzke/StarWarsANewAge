@@ -205,12 +205,17 @@
                             Padding="0"
                             Background="WhiteSmoke"
                             Style="{StaticResource BorderStyle}">
-                            <Label 
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Content="Messaging"
-                                Foreground="MidnightBlue" 
-                                Style="{StaticResource MainPanelLabelStyle}"/>
+                            <TextBox
+                                Height="auto"
+                                Width="auto"
+                                Margin="10"
+                                Background="WhiteSmoke"
+                                BorderThickness="0"
+                                TextWrapping="Wrap"
+                                Text="{Binding MessageDisplay, Mode=OneWay}"
+                                VerticalScrollBarVisibility="Auto"
+                                VerticalContentAlignment="top"
+                                Style="{StaticResource MainPanelTextBoxStyle}"/>
                         </Border>
                         <StackPanel
                             Grid.Column="2"
@@ -226,6 +231,12 @@
                                 HorizontalAlignment="Right">
                                 <Label Content="Experience" Style="{StaticResource MainPanelLabelStyle}"/>
                                 <TextBox Text="{Binding Player.ExperiencePoints}" Style="{StaticResource MainPanelTextBoxStyle}"/>
+                            </StackPanel>
+                            <StackPanel
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                                <Label Content="Credits" Style="{StaticResource MainPanelLabelStyle}"/>
+                                <TextBox Text="{Binding Player.Credits}" Style="{StaticResource MainPanelTextBoxStyle}"/>
                             </StackPanel>
                         </StackPanel>
                     </Grid>

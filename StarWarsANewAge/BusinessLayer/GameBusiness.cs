@@ -16,6 +16,8 @@ namespace StarWarsANewAge.BusinessLayer
         List<string> _messages = new List<string>();
         bool _newPlayer = false;
         PlayerSetupView _playerSetupView;
+        Map _gameMap;
+        Location _currentLocation;
 
         public GameBusiness()
         {
@@ -26,15 +28,16 @@ namespace StarWarsANewAge.BusinessLayer
 
         private void InitializeDataSet()
         {
+            _player = GameData.PlayerData();
             _messages = GameData.InitialMessages();
+            _currentLocation = GameData.InitialGameMapLocation();
+            _gameMap = GameData.GameMapData();
         }
 
         private void InstantiateAndShowView()
         {
-            _gameSessionViewModel = new GameSessionViewModel(
-            _player, 
-            GameData.InitialMessages()
-            );
+            _gameSessionViewModel = new GameSessionViewModel(_player, _messages, _gameMap, _currentLocation);
+            GameData.InitialMessages();
 
             GameSessionView gameSessionView = new GameSessionView(_gameSessionViewModel);
 
@@ -54,7 +57,7 @@ namespace StarWarsANewAge.BusinessLayer
 
                 _player.ExperiencePoints = 0;
                 _player.Health = 100;
-                _player.Lives = 5;
+                _player.Credits = 100;
             }
             else
             {

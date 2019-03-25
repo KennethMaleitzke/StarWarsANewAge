@@ -16,7 +16,7 @@ namespace StarWarsANewAge.Models
 
         #region FIELDS
 
-        private int _lives;
+        private int _credits;
         private int _health;
         private int _experiencePoints;
         private JobTitleName _jobTitle;
@@ -31,11 +31,14 @@ namespace StarWarsANewAge.Models
         #endregion
 
         #region PROPERTIES
-
-        public int Lives
+        public int Credits
         {
-            get { return _lives; }
-            set { _lives = value; }
+            get { return _credits; }
+            set
+            {
+                _credits = value;
+                OnPropertyChanged(nameof(Credits));
+            }
         }
 
         public JobTitleName JobTitle
@@ -84,7 +87,7 @@ namespace StarWarsANewAge.Models
 
             List<string> vowels = new List<string>() { "A", "E", "I", "O", "U" };
 
-            if (vowels.Contains(_jobTitle.ToString().Substring(0, 1))) ;
+            if (vowels.Contains(_jobTitle.ToString().Substring(0, 1))) 
             {
                 article = "an";
             }
