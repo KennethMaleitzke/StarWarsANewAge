@@ -108,6 +108,8 @@ namespace StarWarsANewAge.PresentationLayer
         {
             _gameStartTime = DateTime.Now;
             _accessibleLocations = _gameMap.AccessibleLocations;
+            _player.UpdateInventoryCategories();
+            _player.InitializeWealth();
         }
 
         /// <summary>
@@ -163,6 +165,13 @@ namespace StarWarsANewAge.PresentationLayer
 
         }
 
+        public void AddItemToInventory()
+        {
+            if (_currentGameItem)
+            {
+
+            }
+        }
         #endregion
 
         #region EVENTS

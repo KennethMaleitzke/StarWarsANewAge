@@ -25,6 +25,11 @@ namespace StarWarsANewAge.DataLayer
                 LocationId = 0
             };
         }
+
+        public static GameItem GameItemById(int id)
+        {
+            return StandardGameItems().FirstOrDefault(i => i.Id == id);
+        }
         public static List<string> InitialMessages()
         {
             return new List<string>()
@@ -53,6 +58,8 @@ namespace StarWarsANewAge.DataLayer
         {
 
             Map gameMap = new Map();
+
+            gameMap.StandardGameItems = StandardGameItems();
 
             gameMap.Location = new ObservableCollection<Location>()
             {
@@ -146,6 +153,22 @@ namespace StarWarsANewAge.DataLayer
             //};
 
             return gameMap;
+        }
+
+        public static List<GameItem> StandardGameItems()
+        {
+            return new List<GameItem>
+            {
+                new Weapons(4001, "Lightsaber", 200, 20, 64, "A powerful weapon mainly used by both Jedi and Sith to defend themselves.", 25),
+                new Weapons(4002, "DL-44 Blaster", 125, 10, 50, "A blaster most famously used by Smugglers accross the galaxy.", 20),
+                new Treasure(1998, "Ancient Device", 250, Treasure.TreasureType.Holocron, "Used to obtain ancient knowledge or to be sold for credits.", 50),
+                new Treasure(1997, "Coin of the Rakata", 250, Treasure.TreasureType.Coin, "Can be sold for credits.", 5),
+                new Medpacs(1002, "Small Medpac", 10, 50, "Used to regain a small amount of health.", 5),
+                new Medpacs(1003, "Meduim Medpac", 15, 100, "Used to regain a moderate amount of health", 10),
+                new Medpacs(1004, "Large Medpac", 20, 150, "Used to regain a large amount of health", 15),
+                new Relic(3000, "Black Sun Keycard", 5, "Used to unlock the headquarters of the Black Sun gang", 10, "You have opened the headquarters of the black sun", Relic.UseActionType.OPENLOCATION)
+            };  
+            
         }
     }
 }

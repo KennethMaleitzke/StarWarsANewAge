@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace StarWarsANewAge.Models
 {
-    public class Location
+    public class Location : ObservableObject
     {
         #region ENUMS
 
@@ -21,6 +22,10 @@ namespace StarWarsANewAge.Models
         private int _modifyExperiencePoints;
         private int _modifyHealth;
         private string _message;
+        private ObservableCollection<GameItemQuantity> _gameItems;
+
+
+
 
         #endregion
 
@@ -72,16 +77,84 @@ namespace StarWarsANewAge.Models
             get { return _message; }
             set { _message = value; }
         }
+
+        public ObservableCollection<GameItemQuantity> GameItems
+        {
+            get { return GameItems; }
+            set { GameItems = value; }
+        }
         #endregion
 
         #region CONSTRUCTORS
-
+        public Location()
+        {
+            _gameItems = new ObservableCollection<GameItemQuantity>();
+        }
         #endregion
 
         #region METHODS
         public override string ToString()
         {
             return _name;
+        }
+
+        public void UpdateLocationGameItems()
+        {
+            ObservableCollection<GameItem> updatedLocationGameItems = new ObservableCollection<GameItem>();
+
+            foreach (GameItem GameItem in _gameItems)
+            {
+                updatedLocationGameItems.Add(GameItem);
+            }
+
+            GameItems.Clear();
+
+            foreach (GameItem gameItem in updatedLocationGameItems)
+            {
+                GameItems.Add(gameItem);
+            }
+        }
+
+        public void AddGameItemQuantityToLocation(GameItem selectedGameItemQuantity)
+        {
+            GameItemQuantity gameItemQuantity = _gameItems.FirstOrDefault(i => i.GameItem.Id == selectedGameItemQuantity.GameItem.Id);
+
+            if (gameItemQuantity == null)
+            {
+                GameItemQuantity newGameItemQuantity = new GameItemQuantity();
+                newGameItemQuantity.GameItem = selectedGameItemQuantity.GameItem;
+                newGameItemQuantity.Quantity = 1;
+
+                _gameItems.Add(newGameItemQuantity);
+            }
+            else
+            {
+                gameItemQuantity.Quantity++;
+            }
+
+            UpdateLocationGameItems();
+        }
+
+        public void RemoveGameItemFromLocation(GameItem selectedGameItemQuantity)
+        {
+            //
+            // locate selected item in location
+            //
+            GameItemQuantity gameItemQuantity = _gameItems.FirstOrDefault(i => i.GameItem.Id == selectedGameItemQuantity.GameItem.Id);
+
+            if (gameItemQuantity != null)
+            {
+                if (selectedGameItemQuantity.Quantity == 1)
+                {
+                    _gameItems.Remove(gameItemQuantity);
+                }
+                else
+                {
+                    gameItemQuantity.Quantity--;
+                }
+            }
+
+            UpdateLocationGameItems();
         }
         #endregion
     }
