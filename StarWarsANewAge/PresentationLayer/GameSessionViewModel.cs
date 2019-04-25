@@ -4,7 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using StarWarsANewAge.Models;
+using StarWarsANewAge;
 using System.Collections.ObjectModel;
+using System.Windows.Data;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace StarWarsANewAge.PresentationLayer
 {
@@ -24,6 +28,7 @@ namespace StarWarsANewAge.PresentationLayer
         private Map _gameMap;
         private Location _currentLocation;
         private string _currentLocationName;
+        private GameItemQuantity _currentGameItem;
         private ObservableCollection<Location> _accessibleLocations;
 
 
@@ -49,6 +54,7 @@ namespace StarWarsANewAge.PresentationLayer
 
         public GameSessionViewModel()
         {
+            _accessibleLocations = new ObservableCollection<Location>();
 
         }
 
@@ -78,7 +84,7 @@ namespace StarWarsANewAge.PresentationLayer
             {
                 _currentLocationName = value;
                 OnPlayerMove();
-                OnPropertyChanged("CurrentLocation");
+                OnPropertyChanged(nameof(CurrentLocation));
             }
         }
 
@@ -88,6 +94,7 @@ namespace StarWarsANewAge.PresentationLayer
             set
             {
                 _currentLocation = value;
+                OnPropertyChanged(nameof(CurrentLocation));
             }
         }
 
@@ -97,6 +104,11 @@ namespace StarWarsANewAge.PresentationLayer
             set { _gameMap = value; }
         }
 
+        public GameItemQuantity CurrentGameItem
+        {
+            get { return _currentGameItem; }
+            set { _currentGameItem = value; }
+        }
         #endregion
 
         #region METHODS
@@ -109,7 +121,7 @@ namespace StarWarsANewAge.PresentationLayer
             _gameStartTime = DateTime.Now;
             _accessibleLocations = _gameMap.AccessibleLocations;
             _player.UpdateInventoryCategories();
-            _player.InitializeWealth();
+            //_player.InitializeWealth(); //  Method is missing? Jim
         }
 
         /// <summary>
@@ -167,10 +179,75 @@ namespace StarWarsANewAge.PresentationLayer
 
         public void AddItemToInventory()
         {
-            if (_currentGameItem)
+            if (_currentGameItem != null & _currentLocation.GameItems.Contains(_currentGameItem))
             {
+                GameItemQuantity selectedGameItemQuantity = _currentGameItem as GameItemQuantity;
 
+                _currentLocation.RemoveGameItemFromLocation(selectedGameItemQuantity);
+                _player.AddGameItemToInventory(selectedGameItemQuantity);
+
+                OnPlayerPutDown(selectedGameItemQuantity);
             }
+        }
+
+        public void RemoveItemFromInventory()
+        {
+            if (_currentGameItem != null)
+            {
+                GameItemQuantity selectedGameItemQuantity = _currentGameItem as GameItemQuantity;
+
+                _currentLocation.AddGameItemQuantityToLocation(selectedGameItemQuantity);
+                _player.RemoveGameItemQuantityFromInventory(selectedGameItemQuantity);
+
+                OnPlayerPutDown(selectedGameItemQuantity);
+            }
+        }
+
+        private void OnPlayerPickUp(GameItemQuantity gameItemQuantity)
+        {
+            _player.ExperiencePoints += gameItemQuantity.GameItem.ExperiencePoints;
+            _player.Wealth += gameItemQuantity.GameItem.Value;
+        }
+
+        private void OnPlayerPutDown(GameItemQuantity gameItemQuantity)
+        {
+            _player.Wealth -= gameItemQuantity.GameItem.Value;
+        }
+
+        public void OnUseGameItem()
+        {
+            switch (_currentGameItem.GameItem)
+            {
+                case Medpacs medpac:
+                    ProcessMedpacUse(medpac);
+                    break;
+            }
+        }
+
+        private void ProcessMedpacUse(Medpacs medpacs)
+        {
+            _player.Health += medpacs.HealthChange;
+            _player.RemoveGameItemQuantityFromInventory(_currentGameItem);
+        }
+
+        private void OnPlayerDies(string message)
+        {
+            string messageText = message + "\n\nWould you like to play again?";
+
+            string titleText = "You have become one with the force";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show(messageText, titleText, button);
+
+
+            //switch (result)
+            //{
+            //    case MessageBoxResult.Yes:
+            //    ResetPlayer();
+            //    break;
+            //    case MessageBoxResult.No:
+            //       QuitApplication();
+            //    break;
+            //}
         }
         #endregion
 

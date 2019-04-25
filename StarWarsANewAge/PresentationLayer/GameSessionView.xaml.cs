@@ -25,12 +25,37 @@ namespace StarWarsANewAge.PresentationLayer
         public GameSessionView(GameSessionViewModel gameSessionViewModel)
         {
             _gameSessionViewModel = gameSessionViewModel;
+            InitializeWindowTheme();
             InitializeComponent();
         }
 
         private void InitializeWindowTheme()
         {
             this.Title = "Smelted Goldfish Productions";
+        }
+
+        private void PutDownButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlayerDataTabControl.SelectedItem != null)
+            {
+                _gameSessionViewModel.RemoveItemFromInventory();
+            }
+        }
+
+        private void UseButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlayerDataTabControl.SelectedItem != null)
+            {
+                _gameSessionViewModel.OnUseGameItem();
+            }
+        }
+
+        private void PickUpButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (PlayerDataTabControl.SelectedItem != null)
+            {
+                _gameSessionViewModel.AddItemToInventory();
+            }
         }
     }
 }

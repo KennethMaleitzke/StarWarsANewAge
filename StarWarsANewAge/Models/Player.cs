@@ -123,6 +123,7 @@ namespace StarWarsANewAge.Models
             _treasure = new ObservableCollection<GameItemQuantity>();
             _medpacs = new ObservableCollection<GameItemQuantity>();
             _relics = new ObservableCollection<GameItemQuantity>();
+            _inventory = new ObservableCollection<GameItemQuantity>();
         }
 
 

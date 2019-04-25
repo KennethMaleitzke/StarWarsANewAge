@@ -18,6 +18,7 @@ namespace StarWarsANewAge.Models
         private string _name;
         private string _description;
         private bool _accessible;
+        private int requiredItem;
         private int _requiredExperiencePoints;
         private int _modifyExperiencePoints;
         private int _modifyHealth;
@@ -59,6 +60,11 @@ namespace StarWarsANewAge.Models
             get { return _requiredExperiencePoints; }
             set { _requiredExperiencePoints = value; }
         }
+        public int RequiredItem
+        {
+            get { return requiredItem; }
+            set { requiredItem = value; }
+        }
 
         public int ModifyExperiencePoints
         {
@@ -80,8 +86,8 @@ namespace StarWarsANewAge.Models
 
         public ObservableCollection<GameItemQuantity> GameItems
         {
-            get { return GameItems; }
-            set { GameItems = value; }
+            get { return _gameItems; }
+            set { _gameItems = value; }
         }
         #endregion
 
@@ -100,22 +106,22 @@ namespace StarWarsANewAge.Models
 
         public void UpdateLocationGameItems()
         {
-            ObservableCollection<GameItem> updatedLocationGameItems = new ObservableCollection<GameItem>();
+            ObservableCollection<GameItemQuantity> updatedLocationGameItems = new ObservableCollection<GameItemQuantity>();
 
-            foreach (GameItem GameItem in _gameItems)
+            foreach (var item in _gameItems)
             {
-                updatedLocationGameItems.Add(GameItem);
+                updatedLocationGameItems.Add(item);
             }
 
             GameItems.Clear();
 
-            foreach (GameItem gameItem in updatedLocationGameItems)
+            foreach (var item in updatedLocationGameItems)
             {
-                GameItems.Add(gameItem);
+                GameItems.Add(item);
             }
         }
 
-        public void AddGameItemQuantityToLocation(GameItem selectedGameItemQuantity)
+        public void AddGameItemQuantityToLocation(GameItemQuantity selectedGameItemQuantity)
         {
             GameItemQuantity gameItemQuantity = _gameItems.FirstOrDefault(i => i.GameItem.Id == selectedGameItemQuantity.GameItem.Id);
 
@@ -135,7 +141,7 @@ namespace StarWarsANewAge.Models
             UpdateLocationGameItems();
         }
 
-        public void RemoveGameItemFromLocation(GameItem selectedGameItemQuantity)
+        public void RemoveGameItemFromLocation(GameItemQuantity selectedGameItemQuantity)
         {
             //
             // locate selected item in location

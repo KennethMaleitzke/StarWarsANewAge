@@ -30,8 +30,9 @@ namespace StarWarsANewAge.BusinessLayer
         {
             _player = GameData.PlayerData();
             _messages = GameData.InitialMessages();
-            _currentLocation = GameData.InitialGameMapLocation();
             _gameMap = GameData.GameMapData();
+            _currentLocation = _gameMap.CurrentLocation; //GameData.InitialGameMapLocation();
+            
         }
 
         private void InstantiateAndShowView()

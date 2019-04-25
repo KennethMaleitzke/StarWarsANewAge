@@ -13,7 +13,6 @@ namespace StarWarsANewAge.Models
         private ObservableCollection<Location> _locations;
         private Location _currentLocation;
         private ObservableCollection<Location> _accessibleLocations;
-        private int _maxRows, _maxColumns;
         private List<GameItem> _standardGameItems;
 
         #endregion
@@ -64,11 +63,9 @@ namespace StarWarsANewAge.Models
             _currentLocation = location;
         }
 
-        public Map(int rows, int columns)
+        public Map()
         {
-            _maxRows = rows;
-            _maxColumns = columns;
-            //_mapLocations = new Location[rows, columns];
+
         }
 
         public string OpenLocationsByRelic(int relicId)
@@ -76,18 +73,11 @@ namespace StarWarsANewAge.Models
             string message = "The relic did nothing.";
             Location mapLocation = new Location();
 
-            for (int row = 0; row < _maxRows; row++)
+            if (mapLocation != null && mapLocation.RequiredItem == relicId)
             {
-                for (int column = 0; column < _maxColumns; column++)
-                {
-                    //mapLocation = _mapLocations[row, column];
+                mapLocation.Accessible = true;
+                message = $"{mapLocation.Name} is now accessible";
 
-                    //if (mapLocation != null && mapLocation.RequiredRelicId == relicId)
-                    {
-                        mapLocation.Accessible = true;
-                        message = $"{mapLocation.Name} is now accessible.";
-                    }
-                }
             }
 
             return message;
