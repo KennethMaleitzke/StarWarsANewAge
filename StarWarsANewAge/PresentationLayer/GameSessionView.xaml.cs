@@ -57,5 +57,23 @@ namespace StarWarsANewAge.PresentationLayer
                 _gameSessionViewModel.AddItemToInventory();
             }
         }
+
+        private void SpeakToButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSessionViewModel.OnPlayerTalkTo();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void AttackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (LocationNpcsDataGrid.SelectedItem != null)
+            {
+                _gameSessionViewModel.OnPlayerAttack();
+            }
+        }
     }
 }

@@ -24,9 +24,7 @@ namespace StarWarsANewAge.Models
         private int _modifyHealth;
         private string _message;
         private ObservableCollection<GameItemQuantity> _gameItems;
-
-
-
+        private ObservableCollection<Npc> _npcs;
 
         #endregion
 
@@ -89,6 +87,13 @@ namespace StarWarsANewAge.Models
             get { return _gameItems; }
             set { _gameItems = value; }
         }
+
+        public ObservableCollection<Npc> Npcs
+        {
+            get { return _npcs; }
+            set { _npcs = value; }
+        }
+
         #endregion
 
         #region CONSTRUCTORS

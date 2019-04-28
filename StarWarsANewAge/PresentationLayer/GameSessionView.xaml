@@ -41,6 +41,7 @@
             <Setter Property="Margin" Value="10,0,10,0"/>
             <Setter Property="Width" Value="75"/>
             <Setter Property="Height" Value="20"/>
+            <Setter Property="Padding" Value="5 "/>
             <Setter Property="Background" Value="Silver"/>
             <Setter Property="Foreground" Value="MidnightBlue"/>
             <Setter Property="Template">
@@ -288,7 +289,30 @@
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </TabItem>
-
+                            <TabItem Header="NPCs"
+                                        x:Name="NpcsInfoTabItem">
+                                <DataGrid 
+                                    x:Name="LocationNpcsDataGrid"
+                                    Height="150"
+                                    ItemsSource="{Binding CurrentLocation.Npcs}" 
+                                    SelectedItem="{Binding CurrentNpc}"
+                                    AutoGenerateColumns="False"
+                                    HeadersVisibility="Column">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn 
+                                                    Header="Description" 
+                                                    IsReadOnly="True"                 
+                                                    Binding="{Binding Information, Mode=OneWay}"
+                                                    Width="*">
+                                            <DataGridTextColumn.ElementStyle>
+                                                <Style>
+                                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                                </Style>
+                                            </DataGridTextColumn.ElementStyle>
+                                        </DataGridTextColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </TabItem>
                         </TabControl>
                         <StackPanel
                             Orientation="Vertical"
@@ -306,6 +330,23 @@
                                 Content="Use" 
                                 Style="{StaticResource MainPanelButtonStyle}" 
                                 Click="UseButton_Click"/>
+
+                        </StackPanel>
+                        <Label
+                            Content="NPC Actions"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource MainPanelLabelStyle}"/>
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <Button
+                                Content="Speak To"
+                                Style="{StaticResource MainPanelButtonStyle}"
+                                Click="SpeakToButton_Click"/>
+                            <Button
+                                Content="Attack"
+                                Style="{StaticResource MainPanelButtonStyle}"
+                                Click="AttackButton_Click"/>
                         </StackPanel>
                     </StackPanel>
                 </Border>

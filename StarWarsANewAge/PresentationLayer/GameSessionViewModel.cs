@@ -31,7 +31,12 @@ namespace StarWarsANewAge.PresentationLayer
         private GameItemQuantity _currentGameItem;
         private ObservableCollection<Location> _accessibleLocations;
 
+        private Npc _currentNpc;
 
+
+
+
+        private Random random = new Random();
 
         #endregion
 
@@ -46,6 +51,16 @@ namespace StarWarsANewAge.PresentationLayer
         public string MessageDisplay
         {
             get { return FormatMessagesForViewer(); }
+        }
+
+        public Npc CurrentNpc
+        {
+            get { return _currentNpc; }
+            set
+            {
+                _currentNpc = value;
+                OnPropertyChanged(nameof(CurrentNpc));
+            }
         }
 
         #endregion
@@ -107,7 +122,15 @@ namespace StarWarsANewAge.PresentationLayer
         public GameItemQuantity CurrentGameItem
         {
             get { return _currentGameItem; }
-            set { _currentGameItem = value; }
+            set
+            {
+                _currentGameItem = value;
+                OnPropertyChanged(nameof(CurrentGameItem));
+                if (_currentGameItem.GameItem is Weapons)
+                {
+                    _player.CurrentWeapon = _currentGameItem.GameItem as Weapons;
+                }
+            }
         }
         #endregion
 
@@ -249,8 +272,151 @@ namespace StarWarsANewAge.PresentationLayer
             //    break;
             //}
         }
+
+        public void OnPlayerTalkTo()
+        {
+            if (CurrentNpc != null && CurrentNpc is ISpeak)
+            {
+                ISpeak speakingNpc = CurrentNpc as ISpeak;
+                CurrentLocationName = speakingNpc.Speak();
+            }
+        }
+
+        private BattleModeName NpcBattleResponse()
+        {
+            BattleModeName npcBattleResponse = BattleModeName.RETREAT;
+
+            switch (DieRoll(3))
+            {
+                case 1:
+                    npcBattleResponse = BattleModeName.ATTACK;
+                    break;
+                case 2:
+                    npcBattleResponse = BattleModeName.DEFEND;
+                    break;
+                case 3:
+                    npcBattleResponse = BattleModeName.RETREAT;
+                    break;
+            }
+
+            return npcBattleResponse;
+
+        }
+
+        private int CalculatePlayerHitPoints()
+        {
+            int playerHitPoints = 0;
+
+            switch (_player.BattleMode)
+            {
+                case BattleModeName.ATTACK:
+                    playerHitPoints = _player.Attack();
+                    break;
+                case BattleModeName.DEFEND:
+                    playerHitPoints = _player.Defend();
+                    break;
+                case BattleModeName.RETREAT:
+                    playerHitPoints = _player.Retreat();
+                    break;
+            }
+
+            return playerHitPoints;
+        }
+
+        private int CalculateNpcHitPoints(IBattle battleNpc)
+        {
+            int battleNpcPoints = 0;
+
+            switch (NpcBattleResponse())
+            {
+                case BattleModeName.ATTACK:
+                    battleNpcPoints = battleNpc.Attack();
+                    break;
+                case BattleModeName.DEFEND:
+                    battleNpcPoints = battleNpc.Defend();
+                    break;
+                case BattleModeName.RETREAT:
+                    battleNpcPoints = battleNpc.Retreat();
+                    break;
+            }
+            
+            return battleNpcPoints;
+        }
+
+        private void Battle()
+        {
+            if (_currentNpc is IBattle)
+            {
+                IBattle battleNpc = _currentNpc as IBattle;
+                int playerHitPoints = 0;
+                int battleNpcHitPoints = 0;
+                string battleInformation = "";
+
+                if (_player.CurrentWeapon != null)
+                {
+                    playerHitPoints = CalculatePlayerHitPoints();
+                }
+                else
+                {
+                    battleInformation = "It appears you are entering battle without a weapon";
+                }
+
+                if (battleNpc.CurrentWepaon != null)
+                {
+                    battleNpcHitPoints = CalculateNpcHitPoints(battleNpc);
+                }
+                else
+                {
+                    battleInformation = $"It appears you are entering into battle with {_currentNpc} who has no weapon.";
+                }
+
+                battleInformation +=
+                    $"Player: {_player.BattleMode}  Hit Points: {playerHitPoints}" + Environment.NewLine +
+                    $"NPC: {battleNpc.BattleMode}   Hit Points: {battleNpcHitPoints}" + Environment.NewLine;
+
+                if (playerHitPoints >= battleNpcHitPoints)
+                {
+                    battleInformation += $"You have slain {_currentNpc}";
+                    _currentLocation.Npcs.Remove(_currentNpc);
+                }
+                else
+                {
+                    battleInformation += $"You have been slain by {_currentNpc.Name}";
+                }
+
+                CurrentLocationName = battleInformation;
+            }
+        }
+
+        public void OnPlayerAttack()
+        {
+            _player.BattleMode = BattleModeName.ATTACK;
+            Battle();
+        }
+
+        public void OnPlayerDefend()
+        {
+            _player.BattleMode = BattleModeName.DEFEND;
+            Battle();
+        }
+
+        public void OnPlayerRetreat()
+        {
+            _player.BattleMode = BattleModeName.RETREAT;
+            Battle();
+        }
+
         #endregion
 
+        #region BATTLE METHODS
+
+        #endregion
+        #region HELPER METHODS
+        private int DieRoll(int sides)
+        {
+            return random.Next(1, sides + 1);
+        }
+        #endregion
         #region EVENTS
 
 

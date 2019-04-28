@@ -22,6 +22,7 @@ namespace StarWarsANewAge.DataLayer
                 Health = 100,
                 Credits = 100,
                 ExperiencePoints = 0,
+                SkillLevel = 5,
                 LocationId = 0,
                 Inventory = new ObservableCollection<GameItemQuantity>
                 {
@@ -36,6 +37,12 @@ namespace StarWarsANewAge.DataLayer
         {
             return StandardGameItems().FirstOrDefault(i => i.Id == id);
         }
+
+        private static Npc NpcById(int id)
+        {
+            return Npcs().FirstOrDefault(i => i.Id == id);
+        }
+
         public static List<string> InitialMessages()
         {
             return new List<string>()
@@ -86,9 +93,14 @@ namespace StarWarsANewAge.DataLayer
                     ModifyExperiencePoints = 10,
                        GameItems = new ObservableCollection<GameItemQuantity>
                        {
-                       new GameItemQuantity(GetGameItemById(1002), 1),
-                       new GameItemQuantity(GetGameItemById(4001), 1),
-                       new GameItemQuantity(GetGameItemById(4002), 1),
+                           new GameItemQuantity(GetGameItemById(1002), 1),
+                           new GameItemQuantity(GetGameItemById(4001), 1),
+                           new GameItemQuantity(GetGameItemById(4002), 1),
+                       },
+                       Npcs = new ObservableCollection<Npc>()
+                       {
+                           NpcById(2003),
+                           NpcById(2004)
                        }
 
                  },
@@ -106,8 +118,12 @@ namespace StarWarsANewAge.DataLayer
                         new GameItemQuantity(GetGameItemById(1002), 1),
                         new GameItemQuantity(GetGameItemById(4001), 1),
                         new GameItemQuantity(GetGameItemById(4002), 1),
+                       },
+                       Npcs = new ObservableCollection<Npc>()
+                       {
+                           NpcById(2001),
+                           NpcById(2002)
                        }
-
                  }
             };
 
@@ -134,6 +150,89 @@ namespace StarWarsANewAge.DataLayer
         {
             return StandardGameItems().FirstOrDefault(i => i.Id == id);
         }
+
+        public static List<Npc> Npcs()
+        {
+            return new List<Npc>()
+            {
+                new Military()
+                {
+                    Id = 2001,
+                    Name = "Colenal Grimes",
+                    Race = Character.RaceType.Chiss,
+                    Description = "A very brave and courageous Colenl who has a strong military background.",
+                    Messages = new List<string>()
+                    {
+                        "Stop right there and state your business.",
+                        "I have been ordered to kill anybody who comes through here.",
+                        "Are you looking to die?"
+                    },
+                   SkillLevel = 9,
+                   CurrentWeapon = GameItemById(4002) as Weapons
+                },
+
+                new Military()
+                {
+                    Id = 2002,
+                    Name = "K2-D5",
+                    Race = Character.RaceType.Droid,
+                    Description = "A Battle Droid used on the battle front by both the Republic and Imperials.",
+                    Messages = new List<string>()
+                    {
+                        "Target locked into place.",
+                        "Preparing primary battle directive.",
+                        "Adding subject to primary list of targets."
+                    },
+                    SkillLevel = 8,
+                    CurrentWeapon = GameItemById(4002) as Weapons
+                },
+
+                new Citizen()
+                {
+                    Id = 2003,
+                    Name = "Rayna",
+                    Race = Character.RaceType.Human,
+                    Description = "A hard working citizen ",
+                    Messages =  new List<string>()
+                    {
+                        "Hello there!",
+                        "Is there something that you need from me?",
+                        "Hey there, my name is Rayna!"
+                    }
+                },
+
+                new Citizen()
+                {
+                    Id = 2004,
+                    Name = "Ewkohawk",
+                    Race = Character.RaceType.Wookiee,
+                    Description = "A retired bounty hunter who made his way in the galaxy.",
+                    Messages = new List<string>()
+                    {
+                        "You looking for trouble pal?",
+                        "Listen pal I don't want to hurt you.",
+                        "Don't make me take you in alive."
+                    }
+                },
+
+                new Military()
+                {
+                    Id = 2005,
+                    Name = "Asthosis",
+                    Race = Character.RaceType.Human,
+                    Description = "An active bounty hunter looking to grab some quick cash",
+                    Messages = new List<string>()
+                    {
+                        "There is a pretty price on your head there.",
+                        "I'm claming that bounty on your head.",
+                        "I will take you in dead or alive."
+                    },
+                    SkillLevel = 10,
+                    CurrentWeapon = GameItemById(4002) as Weapons
+                }
+            };
+        }
+
     }
 
     

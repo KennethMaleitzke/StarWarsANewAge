@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace StarWarsANewAge.Models
 {
-    public class Player : Character
+    public class Player : Character, IBattle
     {
         #region ENUMS
 
@@ -16,11 +16,17 @@ namespace StarWarsANewAge.Models
 
         #endregion
 
+        private const int DEFENDER_DAMAGE_ADJUSTMENT = 10;
+        private const int MAXIMUM_RETREAT_DAMAGE = 10;
+
         #region FIELDS
 
         private int _credits;
         private int _health;
         private int _wealth;
+        private int _skillLevel;
+        private Weapons _currentWeapon;
+        private BattleModeName _battleMode;
         private int _experiencePoints;
         private JobTitleName _jobTitle;
         private List<Location> _locationsVisited;
@@ -68,6 +74,24 @@ namespace StarWarsANewAge.Models
         {
             get { return _wealth; }
             set { _wealth = value; }
+        }
+
+        public int SkillLevel
+        {
+            get { return _skillLevel; }
+            set { _skillLevel = value; }
+        }
+
+        public Weapons CurrentWeapon
+        {
+            get { return _currentWeapon; }
+            set { _currentWeapon = value; }
+        }
+
+        public BattleModeName BattleMode
+        {
+            get { return _battleMode; }
+            set { _battleMode = value; }
         }
 
         public int ExperiencePoints
@@ -214,6 +238,56 @@ namespace StarWarsANewAge.Models
         {
             //Wealth = _inventory.Sum(i => i.Value);
         }
+        #endregion
+
+        #region BATTLE METHODS
+
+        public int Attack()
+        {
+            int hitPoints = random.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximunDamage) * _skillLevel;
+
+            if (hitPoints <= 100)
+            {
+                return hitPoints;
+            }
+            else
+            {
+                return 100;
+            }
+        }
+
+        public int Defend()
+        {
+            int hitPoints = (random.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximunDamage) * _skillLevel) - DEFENDER_DAMAGE_ADJUSTMENT;
+
+            if (hitPoints <= 100)
+            {
+                return hitPoints;
+            }
+            else if (hitPoints > 100)
+            {
+                return 100;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public int Retreat()
+        {
+            int hitPoints = _skillLevel * MAXIMUM_RETREAT_DAMAGE;
+
+            if (hitPoints >= 0 && hitPoints <= 100)
+            {
+                return hitPoints;
+            }
+            else
+            {
+                return 100;
+            }
+        }
+
         #endregion
 
         #region EVENTS

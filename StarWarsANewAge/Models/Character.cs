@@ -11,7 +11,7 @@ namespace StarWarsANewAge.Models
         public enum RaceType
         {
             Human,
-            Wookie,
+            Wookiee,
             Chiss,
             Droid
         }
