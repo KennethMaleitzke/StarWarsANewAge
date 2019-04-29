@@ -75,5 +75,15 @@ namespace StarWarsANewAge.PresentationLayer
                 _gameSessionViewModel.OnPlayerAttack();
             }
         }
+
+        private void DefendButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSessionViewModel.OnPlayerDefend();
+        }
+
+        private void RetreatButton_Click(object sender, RoutedEventArgs e)
+        {
+            _gameSessionViewModel.OnPlayerRetreat();
+        }
     }
 }

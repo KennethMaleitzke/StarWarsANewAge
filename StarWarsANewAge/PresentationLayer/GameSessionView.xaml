@@ -348,6 +348,17 @@
                                 Style="{StaticResource MainPanelButtonStyle}"
                                 Click="AttackButton_Click"/>
                         </StackPanel>
+                        <StackPanel
+                            Orientation="Horizontal">
+                            <Button
+                                Content="Defend"
+                                Style="{StaticResource MainPanelButtonStyle}"
+                                Click="DefendButton_Click"/>
+                            <Button
+                                Content="Retreat"
+                                Style="{StaticResource MainPanelButtonStyle}"
+                                Click="RetreatButton_Click"/>
+                        </StackPanel>
                     </StackPanel>
                 </Border>
                 <Border

@@ -22,6 +22,8 @@ namespace StarWarsANewAge.Models
         protected int _locationId;
         protected int _age;
         protected RaceType _race;
+        protected Random random = new Random();
+
         #endregion
 
         #region PROPERTIES
@@ -53,6 +55,22 @@ namespace StarWarsANewAge.Models
         {
             get { return _race; }
             set { _race = value; }
+        }
+
+
+        #endregion
+
+        #region Constructors
+        public Character()
+        {
+
+        }
+
+        public Character(int id, string name, RaceType race)
+        {
+            _name = name;
+            _race = race;
+            //_locationId = locationId;
         }
         #endregion
 

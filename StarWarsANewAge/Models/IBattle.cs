@@ -9,7 +9,7 @@ namespace StarWarsANewAge.Models
     public interface IBattle
     {
         int SkillLevel { get; set; }
-        Weapons CurrentWepaon { get; set; }
+        Weapons CurrentWeapon { get; set; }
         BattleModeName BattleMode { get; set; }
 
         int Attack();

@@ -361,7 +361,7 @@ namespace StarWarsANewAge.PresentationLayer
                     battleInformation = "It appears you are entering battle without a weapon";
                 }
 
-                if (battleNpc.CurrentWepaon != null)
+                if (battleNpc.CurrentWeapon != null)
                 {
                     battleNpcHitPoints = CalculateNpcHitPoints(battleNpc);
                 }

@@ -58,7 +58,7 @@ namespace StarWarsANewAge.Models
         
         private string GetMessage()
         {
-            int messageIndex = random.Next(0, Messages.Count());
+            int messageIndex = r.Next(0, Messages.Count());
             return Messages[messageIndex];
         }
 
@@ -79,7 +79,7 @@ namespace StarWarsANewAge.Models
 
         public int Defend()
         {
-            int hitPoints = (r.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximunDamage) * SkillLevel) - DEFENDER_DAMAGE_ADJUSTMENT;
+            int hitPoints = (random.Next(CurrentWeapon.MinimumDamage, CurrentWeapon.MaximunDamage) * SkillLevel) - DEFENDER_DAMAGE_ADJUSTMENT;
 
             if (hitPoints >= 0 && hitPoints <= 100)
             {
